@@ -1,3 +1,4 @@
+const schemaLogin = require('../joi/schemaLogin');
 const createObjError = require('../utils/createObjError');
 
 module.exports = (req, _res, next) => {
@@ -5,7 +6,7 @@ module.exports = (req, _res, next) => {
 
   const { error } = schemaLogin.validate({ email, password });
 
-  if (error) throw createObjError(400, error.message);
+  if (error) throw createObjError(400, 'Some required fields are missing');
 
   next();
 };
