@@ -1,25 +1,10 @@
 const { User } = require('../database/models');
 const createObjError = require('../utils/createObjError');
 const generateToken = require('../utils/generateToken');
-
-const getUserByEmail = async (email) => {
-  const user = await User.findOne({
-    where: {
-      email,
-    },
-  });
-
-  return user;
-};
-
-const validateAuth = async (email) => {
-  const user = await getUserByEmail(email);
-  
-  if (!user) throw createObjError(401, 'Expired or invalid token');
-};
+const helpersService = require('./helpersService');
 
 const getUsers = async (email) => {
-  validateAuth(email);
+  helpersService.validateAuth(email);
 
   const users = await User.findAll({
     attributes: {
@@ -31,7 +16,7 @@ const getUsers = async (email) => {
 };
 
 const getUserById = async (email, id) => {
-  validateAuth(email);
+  await helpersService.validateAuth(email);
 
   const user = await User.findByPk(id, {
     attributes: {
@@ -45,7 +30,7 @@ const getUserById = async (email, id) => {
 };
 
 const createUser = async (displayName, email, password, image) => {
-  const isExistsUser = await getUserByEmail(email);
+  const isExistsUser = await helpersService.getUserByEmail(email);
   
   if (isExistsUser) throw createObjError(409, 'User already registered');
 
