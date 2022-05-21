@@ -4,7 +4,7 @@ const helpersService = require('./helpersService');
 const getCategories = async (categories) => {
   const response = await Category.findAll({
     where: {
-      name: categories,
+      id: categories,
     },
   });
 
