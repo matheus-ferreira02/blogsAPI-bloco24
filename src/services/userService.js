@@ -2,7 +2,7 @@ const { User } = require('../database/models');
 const createObjError = require('../utils/createObjError');
 const generateToken = require('../utils/generateToken');
 
-const getUser = async (email) => {
+const getUserByEmail = async (email) => {
   const user = await User.findOne({
     where: {
       email,
@@ -12,10 +12,14 @@ const getUser = async (email) => {
   return user;
 };
 
-const getUsers = async (email) => {
-  const user = await getUser(email);
+const validateAuth = async (email) => {
+  const user = await getUserByEmail(email);
   
   if (!user) throw createObjError(401, 'Expired or invalid token');
+};
+
+const getUsers = async (email) => {
+  validateAuth(email);
 
   const users = await User.findAll({
     attributes: {
@@ -26,8 +30,22 @@ const getUsers = async (email) => {
   return users;
 };
 
+const getUserById = async (email, id) => {
+  validateAuth(email);
+
+  const user = await User.findByPk(id, {
+    attributes: {
+      exclude: ['password'],
+    },
+  });
+
+  if (!user) throw createObjError(404, 'User does not exist');
+
+  return user;
+};
+
 const createUser = async (displayName, email, password, image) => {
-  const isExistsUser = await getUser(email);
+  const isExistsUser = await getUserByEmail(email);
   
   if (isExistsUser) throw createObjError(409, 'User already registered');
 
@@ -46,4 +64,5 @@ const createUser = async (displayName, email, password, image) => {
 module.exports = {
   createUser,
   getUsers,
+  getUserById,
 };
