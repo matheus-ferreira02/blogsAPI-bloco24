@@ -8,4 +8,6 @@ routes.post('/', rescue(validateCreateUser), rescue(UserController.createUser));
 
 routes.get('/', rescue(validateAuth), rescue(UserController.getUsers));
 
+routes.get('/:id', rescue(validateAuth), rescue(UserController.getUserById));
+
 module.exports = routes;
