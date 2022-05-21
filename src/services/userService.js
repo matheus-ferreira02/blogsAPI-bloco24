@@ -12,6 +12,20 @@ const getUser = async (email) => {
   return user;
 };
 
+const getUsers = async (email) => {
+  const user = await getUser(email);
+  
+  if (!user) throw createObjError(401, 'Expired or invalid token');
+
+  const users = await User.findAll({
+    attributes: {
+      exclude: ['password'],
+    },
+  });
+
+  return users;
+};
+
 const createUser = async (displayName, email, password, image) => {
   const isExistsUser = await getUser(email);
   
@@ -31,4 +45,5 @@ const createUser = async (displayName, email, password, image) => {
 
 module.exports = {
   createUser,
+  getUsers,
 };
