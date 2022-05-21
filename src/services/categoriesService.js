@@ -9,7 +9,7 @@ const createCategory = async (email, name) => {
   return response;
 };
 
-const getCategories = async (email) => {
+const getAllCategories = async (email) => {
   await helpersService.validateAuth(email);
 
   const response = await Category.findAll();
@@ -19,5 +19,5 @@ const getCategories = async (email) => {
 
 module.exports = {
   createCategory,
-  getCategories,
+  getAllCategories,
 };
