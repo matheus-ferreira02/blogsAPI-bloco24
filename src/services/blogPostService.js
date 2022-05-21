@@ -68,6 +68,8 @@ const getPostById = async (email, id) => {
     ],
   });
 
+  if (!response) throw createObjError(404, 'Post does not exist');
+
   return response;
 };
 
