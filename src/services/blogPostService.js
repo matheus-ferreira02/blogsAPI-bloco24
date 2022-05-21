@@ -34,7 +34,10 @@ const getPosts = async (email) => {
     include: [
       {
         model: User,
-        as: 'users',
+        as: 'user',
+        attributes: {
+          exclude: ['password'],
+        },        
       },
       {
         model: Category,
