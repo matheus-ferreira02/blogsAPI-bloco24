@@ -6,4 +6,6 @@ const categoryController = require('../../controllers/categoryController');
 
 routes.post('/', rescue(validateAuth), rescue(validateCategory), categoryController.createCategory);
 
+routes.get('/', rescue(validateAuth), categoryController.getCategories);
+
 module.exports = routes;
