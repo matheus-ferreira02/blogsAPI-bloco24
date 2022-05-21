@@ -20,7 +20,7 @@ const getPostById = async (req, res) => {
   const { decodedData } = req;
   const { id } = req.params;
 
-  const response = await blogPostService.getPosts(decodedData, id);
+  const response = await blogPostService.getPostById(decodedData, id);
 
   return res.status(200).json(response);
 };
