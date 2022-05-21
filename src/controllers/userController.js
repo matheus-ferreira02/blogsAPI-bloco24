@@ -1,9 +1,9 @@
 const userService = require('../services/userService');
 
 const getUsers = async (req, res) => {
-  const { authorization } = req.headers;
+  const { data } = req;
 
-  const users = userService.getUsers(authorization);
+  const users = await userService.getUsers(data);
 
   return res.status(200).json(users);
 };
