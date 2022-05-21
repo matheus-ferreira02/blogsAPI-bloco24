@@ -1,9 +1,9 @@
 const { Category } = require('../database/models');
 const helpersService = require('./helpersService');
 
-const createCategory = async (email, category) => {
+const createCategory = async (email, name) => {
   await helpersService.validateAuth(email);
-  const response = await Category.create({ category });
+  const response = await Category.create({ name });
 
   return response;
 };
