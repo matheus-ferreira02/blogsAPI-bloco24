@@ -1,6 +1,16 @@
 const { Category } = require('../database/models');
 const helpersService = require('./helpersService');
 
+const getCategories = async (categories) => {
+  const response = await Category.findAll({
+    where: {
+      name: categories,
+    },
+  });
+
+  return response;
+};
+
 const createCategory = async (email, name) => {
   await helpersService.validateAuth(email);
 
@@ -20,4 +30,5 @@ const getAllCategories = async (email) => {
 module.exports = {
   createCategory,
   getAllCategories,
+  getCategories,
 };
