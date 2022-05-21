@@ -49,7 +49,30 @@ const getPosts = async (email) => {
   return response;
 };
 
+const getPostById = async (email, id) => {
+  await helpersService.validateAuth(email);
+
+  const response = await BlogPost.findByPk(id, {
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: {
+          exclude: ['password'],
+        },        
+      },
+      {
+        model: Category,
+        as: 'categories',
+      },
+    ],
+  });
+
+  return response;
+};
+
 module.exports = {
   createPost,
   getPosts,
+  getPostById,
 };
