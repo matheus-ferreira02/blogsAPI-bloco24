@@ -9,7 +9,7 @@ const getUser = async (email) => {
     },
   });
 
-  return user.dataValues;
+  return user;
 };
 
 const createUser = async (displayName, email, password, image) => {
