@@ -7,5 +7,6 @@ const validatePost = require('../../middlewares/validatePost');
 routes.post('/', rescue(validateAuth), rescue(validatePost), rescue(blogPostController.createPost));
 
 routes.get('/', rescue(validateAuth), rescue(blogPostController.getPosts));
+routes.get('/:id', rescue(validateAuth), rescue(blogPostController.getPostById));
 
 module.exports = routes;
