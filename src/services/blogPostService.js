@@ -1,6 +1,6 @@
 const categoriesService = require('./categoriesService');
 const createObjError = require('../utils/createObjError');
-const { BlogPost, User } = require('../database/models');
+const { BlogPost, User, Category } = require('../database/models');
 const helpersService = require('./helpersService');
 
 const validateCategories = async (categories) => {
@@ -30,11 +30,17 @@ const createPost = async (email, post) => {
 const getPosts = async (email) => {
   await helpersService.validateAuth(email);
 
-  const response = BlogPost.findAll({
-    includes: {
-      model: User,
-      as: 'users',
-    },
+  const response = await BlogPost.findAll({
+    include: [
+      {
+        model: User,
+        as: 'users',
+      },
+      {
+        model: Category,
+        as: 'categories',
+      },
+    ],
   });
 
   return response;

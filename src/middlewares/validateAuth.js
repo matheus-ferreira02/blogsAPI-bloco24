@@ -3,7 +3,6 @@ const decodeToken = require('../utils/decodeToken');
 
 module.exports = (req, _res, next) => {
   const { authorization } = req.headers;
-  console.log(authorization);
 
   if (!authorization) throw createObjError(401, 'Token not found');
 

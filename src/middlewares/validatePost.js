@@ -3,6 +3,7 @@ const createObjError = require('../utils/createObjError');
 
 module.exports = (req, _res, next) => {
   const { title, content, categoryIds } = req.body;
+  console.log('entrou validatePost', title, content, categoryIds);
 
   const { error } = schemaPost.validate({ title, content, categoryIds });
 
