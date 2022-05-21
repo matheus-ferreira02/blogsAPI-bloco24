@@ -11,7 +11,7 @@ module.exports = (req, _res, next) => {
 
   if (!decoded.data) throw createObjError(401, 'Expired or invalid token');
 
-  req.data = decoded.data;
+  req.decodedData = decoded.data;
 
   next();
 };

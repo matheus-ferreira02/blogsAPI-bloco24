@@ -1,9 +1,9 @@
 const userService = require('../services/userService');
 
 const getUsers = async (req, res) => {
-  const { data } = req;
+  const { decodedData } = req;
 
-  const users = await userService.getUsers(data);
+  const users = await userService.getUsers(decodedData);
 
   return res.status(200).json(users);
 };
@@ -18,9 +18,9 @@ const createUser = async (req, res) => {
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
-  const { data } = req;
+  const { decodedData } = req;
 
-  const user = await userService.getUserById(data, id);
+  const user = await userService.getUserById(decodedData, id);
 
   return res.status(200).json(user);
 };
