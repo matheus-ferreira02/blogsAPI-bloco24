@@ -12,7 +12,7 @@ const createCategory = async (req, res) => {
 const getCategories = async (req, res) => {
   const { decodedData } = req;
 
-  const response = await categoriesService.createCategory(decodedData);
+  const response = await categoriesService.getCategories(decodedData);
 
   return res.status(200).json(response);
 };
