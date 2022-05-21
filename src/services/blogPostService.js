@@ -9,12 +9,6 @@ const validateCategories = async (categories) => {
   if (response.length !== categories.length) throw createObjError(400, '"categoryIds" not found');
 };
 
-const addCategotToPost = async (post, categoryIds) => {
-  const categories = await categoriesService.getCategories(categoryIds);
-
-  await post.addBlogPosts(categories);
-};
-
 const createPost = async (email, post) => {
   await helpersService.validateAuth(email);
 
@@ -28,7 +22,7 @@ const createPost = async (email, post) => {
     updated: new Date(),
   });
 
-  await addCategotToPost(response, categoryIds);
+  await post.addBlogPosts(categoryIds);
 
   return response;
 };
