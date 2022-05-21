@@ -22,7 +22,7 @@ const createPost = async (email, post) => {
     updated: new Date(),
   });
 
-  await post.addBlogPosts(categoryIds);
+  await response.addCategories(categoryIds);
 
   return response;
 };
