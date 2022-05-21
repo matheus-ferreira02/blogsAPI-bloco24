@@ -1,8 +1,18 @@
 const { User } = require('../database/models');
 
-const createUser = async (name, email, password, image) => {
+const getUser = async (email) => {
+  const user = await User.findOne({
+    where: {
+      email,
+    },
+  });
+
+  return user.dataValues;
+};
+
+const createUser = async (displayName, email, password, image) => {
   const response = await User.create({
-    name,
+    displayName,
     email,
     password,
     image,
