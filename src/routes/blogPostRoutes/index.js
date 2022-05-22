@@ -9,4 +9,6 @@ routes.post('/', rescue(validateAuth), rescue(validatePost), rescue(blogPostCont
 routes.get('/', rescue(validateAuth), rescue(blogPostController.getPosts));
 routes.get('/:id', rescue(validateAuth), rescue(blogPostController.getPostById));
 
+routes.put('/:id', rescue(validateAuth), rescue(blogPostController.updatePost));
+
 module.exports = routes;
