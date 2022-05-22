@@ -13,4 +13,7 @@ routes.get('/:id', rescue(validateAuth), rescue(blogPostController.getPostById))
 routes.put('/:id',
   rescue(validateAuth), rescue(validatePostUpdate), rescue(blogPostController.updatePost));
 
+routes.delete('/:id',
+  rescue(validateAuth), rescue(blogPostController.deletePost));
+
 module.exports = routes;
