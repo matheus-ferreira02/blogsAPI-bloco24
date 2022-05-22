@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Category.associate = ({ User }) => {
     Category.belongsTo(User, {
-      foreignKey: 'id',
+      foreignKey: 'userId',
       as: 'user',
       onDelete: 'CASCADE'
     });
