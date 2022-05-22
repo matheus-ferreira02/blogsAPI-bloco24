@@ -38,9 +38,9 @@ const deletePost = async (req, res) => {
   const { decodedData } = req;
   const { id } = req.params;
 
-  const response = await blogPostService.deletePost(decodedData, req.body, id);
+  await blogPostService.deletePost(decodedData, id);
 
-  return res.status(200).json(response);
+  return res.status(204).end();
 };
 
 module.exports = {

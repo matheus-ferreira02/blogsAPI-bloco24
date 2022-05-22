@@ -12,12 +12,14 @@ const validateCategories = async (categories) => {
 const createPost = async (email, post) => {
   await helpersService.validateAuth(email);
 
+  const user = await helpersService.getUserByEmail(email);
+
   const { title, content, categoryIds } = post;
   await validateCategories(categoryIds);
   const response = await BlogPost.create({
     title,
     content,
-    userId: 1,
+    userId: user.id,
     published: new Date(),
     updated: new Date(),
   });
@@ -73,18 +75,19 @@ const getPostById = async (email, id) => {
   return response;
 };
 
-const validateEditorUser = async (email, idPost) => {
+const validateUser = async (email, idPost) => {
   const post = await BlogPost.findByPk(idPost);
   if (!post) throw createObjError(404, 'Post does not exist');
 
   const user = await helpersService.getUserByEmail(email);
-  if (user.dataValues.id !== post.dataValues.userId) throw createObjError(401, 'Unauthorized user');
+
+  if (user.id !== post.userId) throw createObjError(401, 'Unauthorized user');
 };
 
 const updatePost = async (email, newPost, idPost) => {
   await helpersService.validateAuth(email);
 
-  await validateEditorUser(email, idPost);
+  await validateUser(email, idPost);
 
   const [updatedPostId] = await BlogPost
     .update({ title: newPost.title, content: newPost.content }, {
@@ -101,7 +104,7 @@ const updatePost = async (email, newPost, idPost) => {
 const deletePost = async (email, idPost) => {
   await helpersService.validateAuth(email);
 
-  await validateEditorUser(email, idPost);
+  await validateUser(email, idPost);
 
   await BlogPost.destroy({
     where: {
