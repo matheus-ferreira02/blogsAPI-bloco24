@@ -46,8 +46,21 @@ const createUser = async (displayName, email, password, image) => {
   return token;
 };
 
+const deleteTheUser = async (email) => {
+  await helpersService.validateAuth(email);
+
+  const user = helpersService.getUserByEmail(email);
+
+  await User.destroy({
+    where: {
+      id: user.id,
+    },
+  });
+};
+
 module.exports = {
   createUser,
   getUsers,
   getUserById,
+  deleteTheUser,
 };
