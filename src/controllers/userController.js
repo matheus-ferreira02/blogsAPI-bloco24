@@ -28,9 +28,9 @@ const getUserById = async (req, res) => {
 const deleteTheUser = async (req, res) => {
   const { decodedData } = req;
 
-  const user = await userService.deleteTheUser(decodedData);
+  await userService.deleteTheUser(decodedData);
 
-  return res.status(200).end();
+  return res.status(204).end();
 };
 
 module.exports = {

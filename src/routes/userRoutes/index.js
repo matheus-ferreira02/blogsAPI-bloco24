@@ -10,4 +10,6 @@ routes.get('/', rescue(validateAuth), rescue(UserController.getUsers));
 
 routes.get('/:id', rescue(validateAuth), rescue(UserController.getUserById));
 
+routes.delete('/me', rescue(validateAuth), rescue(UserController.deleteTheUser));
+
 module.exports = routes;
