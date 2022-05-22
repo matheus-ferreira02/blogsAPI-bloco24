@@ -49,7 +49,7 @@ const createUser = async (displayName, email, password, image) => {
 const deleteTheUser = async (email) => {
   await helpersService.validateAuth(email);
 
-  const user = helpersService.getUserByEmail(email);
+  const user = await helpersService.getUserByEmail(email);
 
   await User.destroy({
     where: {
