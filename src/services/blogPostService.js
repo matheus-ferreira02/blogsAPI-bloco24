@@ -98,9 +98,22 @@ const updatePost = async (email, newPost, idPost) => {
   return updatedPost;
 };
 
+const deletePost = async (email, idPost) => {
+  await helpersService.validateAuth(email);
+
+  await validateEditorUser(email, idPost);
+
+  await BlogPost.destroy({
+    where: {
+      id: idPost,
+    },
+  });
+};
+
 module.exports = {
   createPost,
   getPosts,
   getPostById,
   updatePost,
+  deletePost,
 };
