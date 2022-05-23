@@ -1,7 +1,9 @@
 const blogPostService = require('../services/blogPostService');
 
-const createPost = async (req, res) => {  
-  const response = await blogPostService.createPost(req.body);
+const createPost = async (req, res) => {
+  const { decodedData } = req;
+
+  const response = await blogPostService.createPost(decodedData, req.body);
 
   return res.status(201).json(response);
 };
@@ -21,9 +23,10 @@ const getPostById = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
+  const { decodedData } = req;
   const { id } = req.params;
 
-  const response = await blogPostService.updatePost(req.body, id);
+  const response = await blogPostService.updatePost(decodedData, req.body, id);
 
   return res.status(200).json(response);
 };
