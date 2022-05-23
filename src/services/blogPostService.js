@@ -11,8 +11,6 @@ const validateCategories = async (categories) => {
 };
 
 const createPost = async (email, post) => {
-  await helpersService.validateAuth(email);
-
   const user = await helpersService.getUserByEmail(email);
 
   const { title, content, categoryIds } = post;
@@ -30,9 +28,7 @@ const createPost = async (email, post) => {
   return response;
 };
 
-const getPosts = async (email) => {
-  await helpersService.validateAuth(email);
-
+const getPosts = async () => {
   const response = await BlogPost.findAll({
     include: [
       {
@@ -52,9 +48,7 @@ const getPosts = async (email) => {
   return response;
 };
 
-const getPostById = async (email, id) => {
-  await helpersService.validateAuth(email);
-
+const getPostById = async (id) => {
   const response = await BlogPost.findByPk(id, {
     include: [
       {
@@ -86,8 +80,6 @@ const validateUser = async (email, idPost) => {
 };
 
 const updatePost = async (email, newPost, idPost) => {
-  await helpersService.validateAuth(email);
-
   await validateUser(email, idPost);
 
   const [updatedPostId] = await BlogPost
@@ -97,14 +89,12 @@ const updatePost = async (email, newPost, idPost) => {
       },
     });
 
-  const updatedPost = await getPostById(email, updatedPostId);
+  const updatedPost = await getPostById(updatedPostId);
 
   return updatedPost;
 };
 
 const deletePost = async (email, idPost) => {
-  await helpersService.validateAuth(email);
-
   await validateUser(email, idPost);
 
   await BlogPost.destroy({
@@ -114,23 +104,22 @@ const deletePost = async (email, idPost) => {
   });
 };
 
-const searchPost = async (email, search) => {
-  await helpersService.validateAuth(email);
+const searchPost = async (search) => {
+  const response = await BlogPost.findAll({
+    include: [{
+      model: User,
+      as: 'user',
+      attributes: { exclude: ['password'] },
+    },
+    { model: Category, as: 'categories' },
+  ],
+    where: { [Op.or]: [
+        { title: { [Op.like]: `%${search}%` } },
+        { content: { [Op.like]: `%${search}%` } },
+      ],
+    },
+  });
 
-  const response = !search
-    ? await getPosts(email)
-    : await BlogPost.findAll({
-      where: { [Op.or]: [
-          { title: { [Op.like]: `%${search}%` } },
-          { content: { [Op.like]: `%${search}%` } },
-        ],
-      },
-      include: {
-        model: User,
-        as: 'user',
-        attributes: { exclude: ['password'] },
-      },
-    });
   return response;
 };
 

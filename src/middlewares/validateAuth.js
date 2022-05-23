@@ -6,11 +6,9 @@ module.exports = (req, _res, next) => {
 
   if (!authorization) throw createObjError(401, 'Token not found');
 
-  const decoded = decodeToken(authorization);
+  const decodedEmail = decodeToken(authorization);
 
-  if (!decoded.data) throw createObjError(401, 'Expired or invalid token');
-
-  req.decodedData = decoded.data;
+  req.decodedData = decodedEmail.data;
 
   next();
 };

@@ -3,9 +3,7 @@ const createObjError = require('../utils/createObjError');
 const generateToken = require('../utils/generateToken');
 const helpersService = require('./helpersService');
 
-const getUsers = async (email) => {
-  helpersService.validateAuth(email);
-
+const getUsers = async () => {
   const users = await User.findAll({
     attributes: {
       exclude: ['password'],
@@ -15,9 +13,7 @@ const getUsers = async (email) => {
   return users;
 };
 
-const getUserById = async (email, id) => {
-  await helpersService.validateAuth(email);
-
+const getUserById = async (id) => {
   const user = await User.findByPk(id, {
     attributes: {
       exclude: ['password'],
@@ -47,8 +43,6 @@ const createUser = async (displayName, email, password, image) => {
 };
 
 const deleteTheUser = async (email) => {
-  await helpersService.validateAuth(email);
-
   const user = await helpersService.getUserByEmail(email);
 
   await User.destroy({

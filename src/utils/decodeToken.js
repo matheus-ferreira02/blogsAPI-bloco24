@@ -4,10 +4,10 @@ const createObjError = require('./createObjError');
 
 module.exports = (token) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
     
-    return decoded;
+    return decodedData;
   } catch (error) {
-    return createObjError(401, 'Expired or invalid token');
+    throw createObjError(401, 'Expired or invalid token');
   }  
 };

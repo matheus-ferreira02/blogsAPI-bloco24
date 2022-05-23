@@ -1,5 +1,4 @@
 const { Category } = require('../database/models');
-const helpersService = require('./helpersService');
 
 const getCategories = async (categories) => {
   const response = await Category.findAll({
@@ -11,17 +10,13 @@ const getCategories = async (categories) => {
   return response;
 };
 
-const createCategory = async (email, name) => {
-  await helpersService.validateAuth(email);
-
+const createCategory = async (name) => {
   const response = await Category.create({ name });
 
   return response;
 };
 
-const getAllCategories = async (email) => {
-  await helpersService.validateAuth(email);
-
+const getAllCategories = async () => {
   const response = await Category.findAll();
 
   return response;
