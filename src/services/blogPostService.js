@@ -82,14 +82,14 @@ const validateUser = async (email, idPost) => {
 const updatePost = async (email, newPost, idPost) => {
   await validateUser(email, idPost);
 
-  const [updatedPostId] = await BlogPost
+  await BlogPost
     .update({ title: newPost.title, content: newPost.content }, {
       where: {
         id: idPost,
       },
     });
 
-  const updatedPost = await getPostById(updatedPostId);
+  const updatedPost = await getPostById(idPost);
 
   return updatedPost;
 };
